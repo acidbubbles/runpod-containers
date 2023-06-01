@@ -1,32 +1,15 @@
-# start from runpod pytorch container
-ARG BASE_IMAGE=runpod/pytorch:3.10-1.13.1-116
-
+ARG BASE_IMAGE=runpod/pytorch:cuda12
 FROM ${BASE_IMAGE} as dev-base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ENV DEBIAN_FRONTEND noninteractive\
-
-SHELL=/bin/bash
-
-RUN apt-key del 7fa2af80
-RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub
-RUN apt-get update --yes && \
-    # - apt-get upgrade is run to patch known vulnerabilities in apt-get packages as
-    #   the ubuntu base image is rebuilt too seldom sometimes (less than once a month)
-    apt-get upgrade --yes && \
-    apt install --yes --no-install-recommends\
-    wget\
-    bash\
-    openssh-server &&\
-    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
-RUN /usr/bin/python3 -m pip install --upgrade pip
-RUN pip install jupyterlab
-RUN pip install ipywidgets
+ENV DEBIAN_FRONTEND noninteractive SHELL=/bin/bash
 
 RUN cd /workspace && git clone https://github.com/oobabooga/text-generation-webui.git && cd /workspace/text-generation-webui && pip install -r requirements.txt
+RUN cd /workspace && git clone https://github.com/PanQiWei/AutoGPTQ.git && cd /workspace/AutoGPTQ && pip install .
+RUN cd /workspace && git clone https://github.com/timdettmers/bitsandbytes.git && cd /workspace/bitsandbytes && CUDA_VERSION=120 make cuda12x && python setup.py install && cp /workspace/bitsandbytes/bitsandbytes/libbitsandbytes_cuda120.so /usr/local/lib/python3.10/dist-packages/bitsandbytes/libbitsandbytes_cpu.so
 
-ADD start.sh /
-RUN chmod +x /start.sh
+COPY start.sh /workspace
+RUN chmod +x /workspace/start.sh
 
-CMD [ "/start.sh" ]
+CMD [ "/workspace/start.sh" ]

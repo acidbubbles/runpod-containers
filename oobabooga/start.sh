@@ -19,12 +19,12 @@ if [ ! -z "$LOAD_MODEL" ]; then
     python /workspace/text-generation-webui/download-model.py $LOAD_MODEL
 fi
 
-if [[ $JUPYTER_PASSWORD ]]
-then
-  echo "Launching Jupyter Lab"
-  cd /
-  nohup jupyter lab --allow-root --no-browser --port=8888 --ip=* --ServerApp.token=$JUPYTER_PASSWORD --ServerApp.allow_origin=* --ServerApp.preferred_dir=/workspace &
-fi
+# if [[ $JUPYTER_PASSWORD ]]
+# then
+#   echo "Launching Jupyter Lab"
+#   cd /
+#   nohup jupyter lab --allow-root --no-browser --port=8888 --ip=* --ServerApp.token=$JUPYTER_PASSWORD --ServerApp.allow_origin=* --ServerApp.preferred_dir=/workspace &
+# fi
 
 if [ "$WEBUI" == "chatbot" ]; then
     OOBA_ARGS="$OOBA_ARGS --chat"
