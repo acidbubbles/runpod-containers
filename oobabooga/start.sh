@@ -28,12 +28,12 @@ then
   nohup jupyter lab --allow-root --no-browser --port=8888 --ip=* --ServerApp.token=$JUPYTER_PASSWORD --ServerApp.allow_origin=* --ServerApp.preferred_dir=/workspace &
 fi
 
-echo "Launching Server"
-#python server.py --listen # runs Oobabooga text generation webui on port 7860
 if [ "$WEBUI" == "chatbot" ]; then
-    /workspace/text-generation-webui/start_chatbot_server.sh
-else
-    /workspace/text-generation-webui/start_textgen_server.sh
+    OOBA_ARGS="$OOBA_ARGS --chat"
 fi
 
-sleep infinity
+cd /workspace/text-generation-webui
+# runs Oobabooga text generation webui on port 7860, and api on port 5000
+echo "Launching Server"
+echo "python server.py --listen $OOBA_ARGS"
+python server.py --listen $OOBA_ARGS

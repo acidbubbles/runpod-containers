@@ -27,12 +27,6 @@ RUN pip install ipywidgets
 RUN cd /workspace && git clone https://github.com/oobabooga/text-generation-webui.git && cd /workspace/text-generation-webui && pip install -r requirements.txt
 RUN cd /workspace/text-generation-webui && python download-model.py PygmalionAI/pygmalion-6b
 
-ADD start_chatbot_server.sh /workspace/text-generation-webui/
-ADD start_textgen_server.sh /workspace/text-generation-webui/
-
-RUN chmod +x /workspace/text-generation-webui/start_chatbot_server.sh
-RUN chmod +x /workspace/text-generation-webui/start_textgen_server.sh
-
 RUN mv /workspace/text-generation-webui /text-generation-webui
 
 RUN apt install -y rsync
