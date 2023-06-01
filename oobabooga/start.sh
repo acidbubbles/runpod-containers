@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 echo 'syncing to workspace, please wait'
 rsync -au --remove-source-files /text-generation-webui/* /workspace/text-generation-webui
 
