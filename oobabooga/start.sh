@@ -2,9 +2,6 @@
 
 set -e
 
-echo 'syncing to workspace, please wait'
-rsync -au --remove-source-files /text-generation-webui/* /workspace/text-generation-webui
-
 if [[ $PUBLIC_KEY ]]
 then
     mkdir -p ~/.ssh

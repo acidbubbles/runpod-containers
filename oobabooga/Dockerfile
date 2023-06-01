@@ -26,10 +26,6 @@ RUN pip install ipywidgets
 
 RUN cd /workspace && git clone https://github.com/oobabooga/text-generation-webui.git && cd /workspace/text-generation-webui && pip install -r requirements.txt
 
-RUN mv /workspace/text-generation-webui /text-generation-webui
-
-RUN apt install -y rsync
-
 ADD start.sh /
 RUN chmod +x /start.sh
 
