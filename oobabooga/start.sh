@@ -16,8 +16,7 @@ fi
 
 cd /workspace/text-generation-webui/
 
-if [ ! -z "$LOAD_MODEL" ] && [ "$LOAD_MODEL" != "PygmalionAI/pygmalion-6b" ]; then
-    rm -rf /workspace/text-generation-webui/models/pygmalion-6b
+if [ ! -z "$LOAD_MODEL" ]; then
     python /workspace/text-generation-webui/download-model.py $LOAD_MODEL
 fi
 

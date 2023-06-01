@@ -25,7 +25,6 @@ RUN pip install jupyterlab
 RUN pip install ipywidgets
 
 RUN cd /workspace && git clone https://github.com/oobabooga/text-generation-webui.git && cd /workspace/text-generation-webui && pip install -r requirements.txt
-RUN cd /workspace/text-generation-webui && python download-model.py PygmalionAI/pygmalion-6b
 
 RUN mv /workspace/text-generation-webui /text-generation-webui
 
